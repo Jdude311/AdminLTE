@@ -1,6 +1,14 @@
+#+TITLE: Index
+#+PROPERTY: header-args :tangle yes
+
+Opening tags:
+#+begin_src html
 <!DOCTYPE html>
 <html lang="en">
+#+end_src
 
+* Header
+#+begin_src html
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,15 +35,31 @@
   <!-- summernote -->
   <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
 </head>
+#+end_src
+* Body
+#+begin_src html
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+#+end_src html
 
+** Nav and stuff
+
+*** Preloader
+#+begin_src html
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
   </div>
+#+end_src
 
+*** Navbar
+#+begin_src html
 <!-- Navbar -->
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+#+end_src
 
+**** Left navbar links
+#+begin_src html
 <ul class="navbar-nav">
   <li class="nav-item">
     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -47,9 +71,15 @@
     <a href="#" class="nav-link">Contact</a>
   </li>
 </ul>
+#+end_src
 
+**** Right navbar links
+#+begin_src html
 <ul class="navbar-nav ml-auto">
+#+end_src
 
+***** Search
+#+begin_src html
 <!-- Navbar Search -->
 <li class="nav-item">
   <a class="nav-link" data-widget="navbar-search" href="#" role="button">
@@ -71,7 +101,10 @@
     </form>
   </div>
 </li>
+#+end_src
 
+***** Messages dropdown menu
+#+begin_src html
 <!-- Messages Dropdown Menu -->
 <li class="nav-item dropdown">
   <a class="nav-link" data-toggle="dropdown" href="#">
@@ -130,7 +163,10 @@
     <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
   </div>
 </li>
+#+end_src
 
+***** Notifications dropdown menu
+#+begin_src html
 <!-- Notifications Dropdown Menu -->
 <li class="nav-item dropdown">
   <a class="nav-link" data-toggle="dropdown" href="#">
@@ -158,24 +194,39 @@
     <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
   </div>
 </li>
+#+end_src
 
+***** Fullscreen icon
+#+begin_src html
 <li class="nav-item">
   <a class="nav-link" data-widget="fullscreen" href="#" role="button">
     <i class="fas fa-expand-arrows-alt"></i>
   </a>
 </li>
+#+end_src
 
+***** Customization sidebar link
+#+begin_src html
 <li class="nav-item">
   <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#" role="button">
     <i class="fas fa-th-large"></i>
   </a>
 </li>
+#+end_src
 
+***** End right navbar links
+#+begin_src html
 </ul>
-
+#+end_src
+**** End navbar
+#+begin_src html
 </nav>
 <!-- /.navbar -->
+#+end_src
 
+*** Sidebar
+Container:
+#+begin_src html
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <!-- Brand Logo -->
@@ -183,10 +234,16 @@
     <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
     <span class="brand-text font-weight-light">AdminLTE 3</span>
   </a>
+#+end_src
 
+Begin sidebar:
+#+begin_src html
 <!-- Sidebar -->
 <div class="sidebar">
+#+end_src
 
+**** User panel
+#+begin_src html
 <!-- Sidebar user panel (optional) -->
 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
   <div class="image">
@@ -196,7 +253,10 @@
     <a href="#" class="d-block">Alexander Pierce</a>
   </div>
 </div>
+#+end_src
 
+**** Search form
+#+begin_src html
 <!-- SidebarSearch Form -->
 <div class="form-inline">
   <div class="input-group" data-widget="sidebar-search">
@@ -208,13 +268,22 @@
     </div>
   </div>
 </div>
+#+end_src
 
+**** Menu
+Begin sidebar menu:
+#+begin_src html
 <!-- Sidebar Menu -->
 <nav class="mt-2">
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
     <!-- Add icons to the links using the .nav-icon class
          with font-awesome or any other icon font library -->
+#+end_src
 
+***** Options
+
+****** Links to different dashboards
+#+begin_src html
 <li class="nav-item menu-open">
   <a href="#" class="nav-link active">
     <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -244,7 +313,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Widgets
+#+begin_src html
 <li class="nav-item">
   <a href="pages/widgets.html" class="nav-link">
     <i class="nav-icon fas fa-th"></i>
@@ -254,7 +326,10 @@
     </p>
   </a>
 </li>
+#+end_src
 
+****** Layout Options
+#+begin_src  html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-copy"></i>
@@ -315,7 +390,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Charts
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-chart-pie"></i>
@@ -351,7 +429,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** UI Elements
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-tree"></i>
@@ -411,7 +492,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Forms
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-edit"></i>
@@ -447,7 +531,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Tables
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-table"></i>
@@ -477,9 +564,15 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+***** Example links
+#+begin_src html
 <li class="nav-header">EXAMPLES</li>
+#+end_src
 
+****** Calendar
+#+begin_src html
 <li class="nav-item">
   <a href="pages/calendar.html" class="nav-link">
     <i class="nav-icon far fa-calendar-alt"></i>
@@ -489,7 +582,10 @@
     </p>
   </a>
 </li>
+#+end_src
 
+****** Gallery
+#+begin_src html
 <li class="nav-item">
   <a href="pages/gallery.html" class="nav-link">
     <i class="nav-icon far fa-image"></i>
@@ -498,7 +594,10 @@
     </p>
   </a>
 </li>
+#+end_src
 
+****** Kanban Board
+#+begin_src html
 <li class="nav-item">
   <a href="pages/kanban.html" class="nav-link">
     <i class="nav-icon fas fa-columns"></i>
@@ -507,7 +606,10 @@
     </p>
   </a>
 </li>
+#+end_src
 
+****** Mailbox
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon far fa-envelope"></i>
@@ -537,7 +639,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Pages
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-book"></i>
@@ -609,7 +714,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Extras
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon far fa-plus-square"></i>
@@ -739,7 +847,10 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+****** Search
+#+begin_src html
 <li class="nav-item">
   <a href="#" class="nav-link">
     <i class="nav-icon fas fa-search"></i>
@@ -763,23 +874,34 @@
     </li>
   </ul>
 </li>
+#+end_src
 
+***** Miscellaneous
+#+begin_src html
 <li class="nav-header">MISCELLANEOUS</li>
-
+#+end_src
+****** Tabbed iFrame Plugin
+#+begin_src html
 <li class="nav-item">
   <a href="iframe.html" class="nav-link">
     <i class="nav-icon fas fa-ellipsis-h"></i>
     <p>Tabbed IFrame Plugin</p>
   </a>
 </li>
+#+end_src
 
+****** Documentation
+#+begin_src html
 <li class="nav-item">
   <a href="https://adminlte.io/docs/3.1/" class="nav-link">
     <i class="nav-icon fas fa-file"></i>
     <p>Documentation</p>
   </a>
 </li>
+#+end_src
 
+***** Multilevel example
+#+begin_src html
 <li class="nav-header">MULTI LEVEL EXAMPLE</li>
 <li class="nav-item">
   <a href="#" class="nav-link">
@@ -845,7 +967,10 @@
     <p>Level 1</p>
   </a>
 </li>
+#+end_src
 
+***** Labels
+#+begin_src html
 <li class="nav-header">LABELS</li>
 <li class="nav-item">
   <a href="#" class="nav-link">
@@ -865,18 +990,31 @@
     <p>Informational</p>
   </a>
 </li>
+#+end_src
 
+***** End sidebar menu
+#+begin_src html
 </ul>
 </nav>
 <!-- /.sidebar-menu -->
+#+end_src
 
+**** End sidebar
+#+begin_src html
 </div>
 <!-- /.sidebar -->
 </aside>
+#+end_src
 
+** Page content
+Wrapper:
+#+begin_src html
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+#+end_src
 
+*** Content header
+#+begin_src html
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -894,14 +1032,24 @@
   </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+#+end_src
 
+*** Content begin
+#+begin_src html
 <!-- Main content -->
 <section class="content">
   <div class="container-fluid">
+#+end_src
 
+*** Small quick statistic boxes (first row)
+Start  section:
+#+begin_src html
 <!-- Small boxes (Stat box) -->
 <div class="row">
+#+end_src
 
+Top left box (new orders):
+#+begin_src html
 <div class="col-lg-3 col-6">
   <!-- small box -->
   <div class="small-box bg-info">
@@ -917,7 +1065,10 @@
   </div>
 </div>
 <!-- ./col -->
+#+end_src
 
+Top right box (bounce rate):
+#+begin_src html
 <div class="col-lg-3 col-6">
   <!-- small box -->
   <div class="small-box bg-success">
@@ -933,7 +1084,10 @@
   </div>
 </div>
 <!-- ./col -->
+#+end_src
 
+Bottom left box (user registrations):
+#+begin_src html
 <div class="col-lg-3 col-6">
   <!-- small box -->
   <div class="small-box bg-warning">
@@ -949,7 +1103,10 @@
   </div>
 </div>
 <!-- ./col -->
+#+end_src
 
+Bottom right box (unique visitors):
+#+begin_src html
 <div class="col-lg-3 col-6">
   <!-- small box -->
   <div class="small-box bg-danger">
@@ -965,16 +1122,29 @@
   </div>
 </div>
 <!-- ./col -->
+#+end_src
 
+End top section:
+#+begin_src html
 </div>
 <!-- /.row -->
+#+end_src
 
+*** Main Content
+Main row
+#+begin_src html
 <!-- Main row -->
 <div class="row">
+#+end_src
 
+**** Left column
+#+begin_src html
 <!-- Left col -->
 <section class="col-lg-7 connectedSortable">
+#+end_src
 
+***** Chart
+#+begin_src html
 <!-- Custom tabs (Charts with tabs)-->
 <div class="card">
   <div class="card-header">
@@ -1006,7 +1176,144 @@
     </div>
   </div><!-- /.card-body -->
 </div>
+#+end_src
 
+***** Todo list :disabled:
+#+begin_src html :tangle no
+<!-- TO DO List -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">
+      <i class="ion ion-clipboard mr-1"></i>
+      To Do List
+    </h3>
+
+    <div class="card-tools">
+      <ul class="pagination pagination-sm">
+        <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+        <li class="page-item"><a href="#" class="page-link">1</a></li>
+        <li class="page-item"><a href="#" class="page-link">2</a></li>
+        <li class="page-item"><a href="#" class="page-link">3</a></li>
+        <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+      </ul>
+    </div>
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <ul class="todo-list" data-widget="todo-list">
+      <li>
+        <!-- drag handle -->
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <!-- checkbox -->
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo1" id="todoCheck1">
+          <label for="todoCheck1"></label>
+        </div>
+        <!-- todo text -->
+        <span class="text">Design a nice theme</span>
+        <!-- Emphasis label -->
+        <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+        <!-- General tools such as edit or delete-->
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+      <li>
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
+          <label for="todoCheck2"></label>
+        </div>
+        <span class="text">Make the theme responsive</span>
+        <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+      <li>
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo3" id="todoCheck3">
+          <label for="todoCheck3"></label>
+        </div>
+        <span class="text">Let theme shine like a star</span>
+        <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+      <li>
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo4" id="todoCheck4">
+          <label for="todoCheck4"></label>
+        </div>
+        <span class="text">Let theme shine like a star</span>
+        <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+      <li>
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo5" id="todoCheck5">
+          <label for="todoCheck5"></label>
+        </div>
+        <span class="text">Check your messages and notifications</span>
+        <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+      <li>
+        <span class="handle">
+          <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </span>
+        <div  class="icheck-primary d-inline ml-2">
+          <input type="checkbox" value="" name="todo6" id="todoCheck6">
+          <label for="todoCheck6"></label>
+        </div>
+        <span class="text">Let theme shine like a star</span>
+        <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+        <div class="tools">
+          <i class="fas fa-edit"></i>
+          <i class="fas fa-trash-o"></i>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <!-- /.card-body -->
+  <div class="card-footer clearfix">
+    <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+  </div>
+</div>
+<!-- /.card -->
+#+end_src
+
+***** Map chart
+#+begin_src html
 <!-- Map card -->
 <div class="card bg-gradient-primary">
   <div class="card-header border-0">
@@ -1051,13 +1358,22 @@
   </div>
 </div>
 <!-- /.card -->
+#+end_src
 
+***** End left col
+#+begin_src html
 </section>
 <!-- /.Left col -->
+#+end_src
 
+**** Right col
+#+begin_src html
 <!-- right col (We are only adding the ID to make the widgets sortable)-->
 <section class="col-lg-5 connectedSortable">
+#+end_src
 
+***** Line graph
+#+begin_src html
 <!-- solid sales graph -->
 <div class="card bg-gradient-info">
   <div class="card-header border-0">
@@ -1108,7 +1424,9 @@
   <!-- /.card-footer -->
 </div>
 <!-- /.card -->
+#+end_src
 
+#+begin_src html
 <!-- Calendar -->
 <div class="card bg-gradient-success">
   <div class="card-header border-0">
@@ -1148,18 +1466,31 @@
   <!-- /.card-body -->
 </div>
 <!-- /.card -->
+#+end_src
 
+***** End right col
+#+begin_src html
 </section>
 <!-- right col -->
 </div>
 <!-- /.row (main row) -->
+#+end_src
 
+*** End main content container
+#+begin_src html
 </div><!-- /.container-fluid -->
 </section>
 <!-- /.content -->
+#+end_src
+#+end_src
 
+** End wrapper
+#+begin_src html
 </div>
+#+end_src
 
+* Footer
+#+begin_src html
   <footer class="main-footer">
     <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
     All rights reserved.
@@ -1174,7 +1505,10 @@
   </aside>
   <!-- /.control-sidebar -->
 <!-- ./wrapper -->
+#+end_src
 
+* Import plugins
+#+begin_src html
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -1211,8 +1545,15 @@
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <!-- <script src="dist/js/pages/dashboard.js"></script> -->
 <script src="dist/js/pages/production.js"></script>
+#+end_src
 
+* Close <body> and wrapper
+#+begin_src html
     </div>
 </body>
+#+end_src
 
+* Close <html>
+#+begin_src html
 </html>
+#+end_src
