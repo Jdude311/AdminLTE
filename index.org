@@ -38,11 +38,11 @@ Opening tags:
 #+end_src
 * Body
 #+begin_src html
-<body class="hold-transition sidebar-mini layout-fixed">
+<body class="hold-transition sidebar-collapse sidebar-mini layout-fixed">
     <div class="wrapper">
 #+end_src html
 
-** Nav and stuff
+** Nav and sidebar
 
 *** Preloader
 #+begin_src html
