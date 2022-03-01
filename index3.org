@@ -13,7 +13,7 @@ Set up title and site settings:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | Dashboard 3</title>
+  <title>RDHS Ventilation | Overview</title>
 #+end_src
 
 Import fonts and styles:
@@ -237,7 +237,7 @@ Add the logo to the top:
 #+begin_src html
     <a href="index3.html" class="brand-link">
       <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
+      <span class="brand-text font-weight-light">RDHS Ventilation</span>
     </a>
 #+end_src
 
@@ -1024,7 +1024,7 @@ Content header:
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard v3</h1>
+            <h1 class="m-0">Ventilation Overview</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -1058,30 +1058,30 @@ Graph report card:
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                  <h3 class="card-title">Online Store Visitors</h3>
-                  <a href="javascript:void(0);">View Report</a>
+                  <h3 class="card-title">CO<sub>2</sub></h3>
+                  <!-- <a href="javascript:void(0);">View Report</a> -->
                 </div>
               </div>
               <div class="card-body">
                 <div class="d-flex">
                   <p class="d-flex flex-column">
-                    <span class="text-bold text-lg">820</span>
-                    <span>Visitors Over Time</span>
+                    <span class="text-bold text-lg">Max classroom CO<sub>2</sub> levels</span>
+                    <span>This week's daily average peaks</span>
                   </p>
                   <p class="ml-auto d-flex flex-column text-right">
                     <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 12.5%
+                      <!-- <i class="fas fa-arrow-up"></i> 12.5% -->
                     </span>
-                    <span class="text-muted">Since last week</span>
+                    <!-- <span class="text-muted">Since last week</span> -->
                   </p>
                 </div>
                 <!-- /.d-flex -->
 
                 <div class="position-relative mb-4">
-                  <canvas id="visitors-chart" height="200"></canvas>
+                  <canvas id="peaks-chart" height="200"></canvas>
                 </div>
 
-                <div class="d-flex flex-row justify-content-end">
+                <!-- <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
                     <i class="fas fa-square text-primary"></i> This Week
                   </span>
@@ -1089,7 +1089,7 @@ Graph report card:
                   <span>
                     <i class="fas fa-square text-gray"></i> Last Week
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
 #+end_src
@@ -1213,35 +1213,35 @@ Close left side:
           <div class="col-lg-6">
 #+end_src
 
-Sales chart card:
+Weekly risk summary chart card:
 #+begin_src html
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
-                  <h3 class="card-title">Sales</h3>
-                  <a href="javascript:void(0);">View Report</a>
+                  <h3 class="card-title">Risk</h3>
+                  <!-- <a href="javascript:void(0);">View Report</a> -->
                 </div>
               </div>
               <div class="card-body">
                 <div class="d-flex">
                   <p class="d-flex flex-column">
-                    <span class="text-bold text-lg">$18,230.00</span>
-                    <span>Sales Over Time</span>
+                    <span class="text-bold text-lg">Weekly risk report</span>
+                    <span>Calculated aerosol transmission risk, based on masked students and one infected</span>
                   </p>
                   <p class="ml-auto d-flex flex-column text-right">
                     <span class="text-success">
-                      <i class="fas fa-arrow-up"></i> 33.1%
+                      <!-- <i class="fas fa-arrow-up"></i> 33.1% -->
                     </span>
-                    <span class="text-muted">Since last month</span>
+                    <!-- <span class="text-muted">Since last month</span> -->
                   </p>
                 </div>
                 <!-- /.d-flex -->
 
                 <div class="position-relative mb-4">
-                  <canvas id="sales-chart" height="200"></canvas>
+                  <canvas id="infection-risk-chart" height="200"></canvas>
                 </div>
 
-                <div class="d-flex flex-row justify-content-end">
+                <!-- <div class="d-flex flex-row justify-content-end">
                   <span class="mr-2">
                     <i class="fas fa-square text-primary"></i> This year
                   </span>
@@ -1249,7 +1249,7 @@ Sales chart card:
                   <span>
                     <i class="fas fa-square text-gray"></i> Last year
                   </span>
-                </div>
+                </div> -->
               </div>
             </div>
 #+end_src
@@ -1367,9 +1367,8 @@ Blank and I'm frankly not sure what the purpose of this is.
 <!-- OPTIONAL SCRIPTS -->
 <script src="plugins/chart.js/Chart.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="dist/js/pages/dashboard3.js"></script>
+<!-- <script src="dist/js/demo.js"></script> -->
+<script src="dist/js/pages/production3.js"></script>
 #+end_src
 
 ** Close body :closer:
