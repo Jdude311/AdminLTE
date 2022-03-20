@@ -193,7 +193,7 @@ $(function () {
   function update() {
     interactive_plot.setData([getData()])
     interactive_plot.draw()
-    interactive_plot.triggerRedrawOverlay()
+    interactive_plot.drawOverlay()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
     }
