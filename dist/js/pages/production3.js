@@ -184,7 +184,8 @@ $(function () {
         show: true
       },
       xaxis: {
-        show: true
+        show: true,
+        tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
       }
     }
   )
