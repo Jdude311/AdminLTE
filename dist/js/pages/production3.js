@@ -183,8 +183,6 @@ $(function () {
       },
       xaxis: {
         show: true,
-        min: getData()[Math.max(getData.length-60, 0)][0],
-        max: getData().pop()[0],
         tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
       }
     }
@@ -194,8 +192,8 @@ $(function () {
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
     interactive_plot.setData([getData()])
-    interactive_plot.setupGrid()
     interactive_plot.draw()
+    interactive_plot.triggerRedrawOverlay()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
     }
