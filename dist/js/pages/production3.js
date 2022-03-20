@@ -193,11 +193,8 @@ $(function () {
   var updateInterval = 1000 // Fetch data ever x milliseconds
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
-    interactive_plot.setData([getData()])
-
-    // Since the axes don't change, we don't need to call plot.setupGrid()
+    interactive_plot.setData(getData())
     interactive_plot.draw()
-    interactive_plot.setupGrid()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
     }
