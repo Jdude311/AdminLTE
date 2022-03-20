@@ -185,7 +185,7 @@ $(function () {
       },
       xaxis: {
         show: true,
-        min: Math.min.apply(newdata.map(x => x = x[0]))
+        min: Math.min.apply(newdata.map(x => x = x[0])),
         tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
       }
     }
