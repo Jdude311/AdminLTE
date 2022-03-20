@@ -159,11 +159,9 @@ $(function () {
     return csv.slice(Math.max(csv.length-60, 0), csv.length)
   }
 
-  var interactive_plot = () => {
-    newdata = getData()
-    $.plot('#realtime-chart', [
+  var interactive_plot =  $.plot('#realtime-chart', [
       {
-        data: newdata,
+        data: getData(),
       }
     ],
     {
@@ -185,11 +183,11 @@ $(function () {
       },
       xaxis: {
         show: true,
-        min: Math.min.apply(newdata.map(x => x = x[0])),
+        min: getData()[Math.max(getData.length-60, 0)][0],
         tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
       }
     }
-  )}
+  )
 
   var updateInterval = 1000 // Fetch data ever x milliseconds
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
