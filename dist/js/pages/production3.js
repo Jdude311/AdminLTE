@@ -184,6 +184,7 @@ $(function () {
       xaxis: {
         show: true,
         min: getData()[Math.max(getData.length-60, 0)][0],
+        max: getData().pop()[0],
         tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
       }
     }
