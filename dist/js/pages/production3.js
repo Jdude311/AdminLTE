@@ -192,8 +192,9 @@ $(function () {
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
     interactive_plot.setData([getData()])
+    interactive_plot.triggerRedrawOverlay()
     interactive_plot.draw()
-    interactive_plot.drawOverlay()
+    interactive_plot.triggerRedrawOverlay()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
     }
