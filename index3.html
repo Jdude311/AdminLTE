@@ -882,6 +882,44 @@
             <div class="card">
               <div class="card-header border-0">
                 <div class="d-flex justify-content-between">
+                  <h3 class="card-title">TEST SENSOR DATA LIVE</sub></h3>
+                  <!-- <a href="javascript:void(0);">View Report</a> -->
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="d-flex">
+                  <p class="d-flex flex-column">
+                    <span class="text-bold text-lg">Data from the test sensor</span>
+                    <span>Data I guess, yeah that's about it</span>
+                  </p>
+                  <p class="ml-auto d-flex flex-column text-right">
+                    <span class="text-success">
+                      <!-- <i class="fas fa-arrow-up"></i> 12.5% -->
+                    </span>
+                    <!-- <span class="text-muted">Since last week</span> -->
+                  </p>
+                </div>
+                <!-- /.d-flex -->
+
+                <div class="position-relative mb-4">
+                  <div id="realtime-chart" style="height: 200px"></div>
+                </div>
+
+                <!-- <div class="d-flex flex-row justify-content-end">
+                  <span class="mr-2">
+                    <i class="fas fa-square text-primary"></i> This Week
+                  </span>
+
+                  <span>
+                    <i class="fas fa-square text-gray"></i> Last Week
+                  </span>
+                </div> -->
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header border-0">
+                <div class="d-flex justify-content-between">
                   <h3 class="card-title">CO<sub>2</sub></h3>
                   <!-- <a href="javascript:void(0);">View Report</a> -->
                 </div>
@@ -1124,6 +1162,16 @@
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- FLOT CHARTS -->
+<script src="plugins/flot/jquery.flot.js"></script>
+<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->
+<script src="plugins/flot/plugins/jquery.flot.resize.js"></script>
+<!-- FLOT PIE PLUGIN - also used to draw donut charts -->
+<script src="plugins/flot/plugins/jquery.flot.pie.js"></script>
+
+<!-- D3 for CSV reading-->
+<script src="https://d3js.org/d3.v7.min.js"></script>
+
 <!-- AdminLTE -->
 <script src="dist/js/adminlte.js"></script>
 

@@ -2,6 +2,92 @@
 
 $(function () {
   'use strict'
+  // ref: http://stackoverflow.com/a/1293163/2343
+  // This will parse a delimited string into an array of
+  // arrays. The default delimiter is the comma, but this
+  // can be overriden in the second argument.
+  function CSVToArray( strData, strDelimiter ){
+    // Check to see if the delimiter is defined. If not,
+    // then default to comma.
+    strDelimiter = (strDelimiter || ",");
+
+    // Create a regular expression to parse the CSV values.
+    var objPattern = new RegExp(
+      (
+        // Delimiters.
+        "(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+
+        // Quoted fields.
+        "(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+
+        // Standard fields.
+        "([^\"\\" + strDelimiter + "\\r\\n]*))"
+      ),
+      "gi"
+    );
+
+
+    // Create an array to hold our data. Give the array
+    // a default empty first row.
+    var arrData = [[]];
+
+    // Create an array to hold our individual pattern
+    // matching groups.
+    var arrMatches = null;
+
+
+    // Keep looping over the regular expression matches
+    // until we can no longer find a match.
+    while (arrMatches = objPattern.exec( strData )){
+
+      // Get the delimiter that was found.
+      var strMatchedDelimiter = arrMatches[ 1 ];
+
+      // Check to see if the given delimiter has a length
+      // (is not the start of string) and if it matches
+      // field delimiter. If id does not, then we know
+      // that this delimiter is a row delimiter.
+      if (
+        strMatchedDelimiter.length &&
+          strMatchedDelimiter !== strDelimiter
+      ){
+
+        // Since we have reached a new row of data,
+        // add an empty row to our data array.
+        arrData.push( [] );
+
+      }
+
+      var strMatchedValue;
+
+      // Now that we have our delimiter out of the way,
+      // let's check to see which kind of value we
+      // captured (quoted or unquoted).
+      if (arrMatches[ 2 ]){
+
+        // We found a quoted value. When we capture
+        // this value, unescape any double quotes.
+        strMatchedValue = arrMatches[ 2 ].replace(
+          new RegExp( "\"\"", "g" ),
+          "\""
+        );
+
+      } else {
+
+        // We found a non-quoted value.
+        strMatchedValue = arrMatches[ 3 ];
+
+      }
+
+
+      // Now that we have our value string, let's add
+      // it to the data array.
+      arrData[ arrData.length - 1 ].push( strMatchedValue );
+    }
+
+    // Return the parsed data.
+    return( arrData );
+  }
 
   var ticksStyle = {
     fontColor: '#495057',
@@ -10,6 +96,124 @@ $(function () {
 
   var mode = 'index'
   var intersect = true
+
+  /*
+   * Flot Interactive Chart
+   * -----------------------
+   */
+  // We use an inline data source in the example, usually data would
+  // be fetched from a server
+  var data = []
+  var totalPoints = 100
+
+  function getData() {
+    /*
+    if (data.length > 0) {
+      data = data.slice(1)
+    }
+
+    // Do a random walk
+    while (data.length < totalPoints) {
+      var prev = data.length > 0 ? data[data.length - 1] : 50
+      var y = prev + Math.random() * 10 - 5
+
+      if (y < 0) {
+        y = 0
+      } else if (y > 100) {
+        y = 100
+      }
+
+      data.push(y)
+    }
+
+    // Zip the generated y values with the x values
+    var res = []
+    for (var i = 0; i < data.length; ++i) {
+      res.push([i, data[i]])
+    }
+
+    return res
+    var final
+    function callback(result) {
+      var $raw = result
+      var ret = []
+      for (var i = $raw.length-1; i >= Math.max($raw.length-100, 0); i--) {
+        ret.push([$raw[i].Time, $raw[i].eCO2])
+      }
+      final = ret
+    }
+    d3.csv("test_sensors.csv",callback)
+    return final
+    */
+    var data
+    $.ajax({
+      async: false,
+      url: '/test_sensors.csv',
+      type:'GET',
+      success:function(result){
+        data = result
+      }
+    })
+    var csv = CSVToArray(data, ",")
+    csv = csv.map(x => [x[1], x[2]])
+    return csv
+  }
+
+  var interactive_plot = $.plot('#realtime-chart', [
+      {
+        data: getData(),
+      }
+    ],
+    {
+      grid: {
+        borderColor: '#f3f3f3',
+        borderWidth: 1,
+        tickColor: '#f3f3f3'
+      },
+      series: {
+        color: '#3c8dbc',
+        lines: {
+          lineWidth: 2,
+          show: true,
+          fill: true,
+        },
+      },
+      yaxis: {
+        min: 0,
+        max: 100,
+        show: true
+      },
+      xaxis: {
+        show: true
+      }
+    }
+  )
+
+  var updateInterval = 500 // Fetch data ever x milliseconds
+  var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
+  function update() {
+    interactive_plot.setData([getData()])
+
+    // Since the axes don't change, we don't need to call plot.setupGrid()
+    interactive_plot.draw()
+    if (realtime === 'on') {
+      setTimeout(update, updateInterval)
+    }
+  }
+
+  // INITIALIZE REALTIME DATA FETCHING
+  if (realtime === 'on') {
+    update()
+  }
+  // REALTIME TOGGLE
+  $('#realtime.btn').click(function () {
+    if ($(this).data('toggle') === 'on') {
+      realtime = 'on'
+    } else {
+      realtime = 'off'
+    }
+    update()
+  })
 
   var $infectionRiskChart = $('#infection-risk-chart')
   // eslint-disable-next-line no-unused-vars
