@@ -107,44 +107,6 @@ $(function () {
   var totalPoints = 100
 
   function getData() {
-    /*
-    if (data.length > 0) {
-      data = data.slice(1)
-    }
-
-    // Do a random walk
-    while (data.length < totalPoints) {
-      var prev = data.length > 0 ? data[data.length - 1] : 50
-      var y = prev + Math.random() * 10 - 5
-
-      if (y < 0) {
-        y = 0
-      } else if (y > 100) {
-        y = 100
-      }
-
-      data.push(y)
-    }
-
-    // Zip the generated y values with the x values
-    var res = []
-    for (var i = 0; i < data.length; ++i) {
-      res.push([i, data[i]])
-    }
-
-    return res
-    var final
-    function callback(result) {
-      var $raw = result
-      var ret = []
-      for (var i = $raw.length-1; i >= Math.max($raw.length-100, 0); i--) {
-        ret.push([$raw[i].Time, $raw[i].eCO2])
-      }
-      final = ret
-    }
-    d3.csv("test_sensors.csv",callback)
-    return final
-    */
     var data
     $.ajax({
       async: false,
@@ -155,20 +117,20 @@ $(function () {
       }
     })
     var csv = CSVToArray(data, ",")
-    csv = csv.map(x => [x[1], x[2]])
+    csv = csv.map(x => [x[3], x[2]])
+    //csv = csv.map(x => [x[1], x[2]]) // old one usign wrong unix timestamps
     return csv.slice(Math.max(csv.length-2880, 0), csv.length)
   }
 
-  var interactive_plot =  $.plot('#realtime-chart', [
-      {
-        data: getData(),
-      }
-    ],
+  var interactive_plot =  $.plot('#realtime-chart', [ getData() ],
     {
+      timeline: true,
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
-        tickColor: '#f3f3f3'
+        tickColor: '#f3f3f3',
+	hoverable: false,
+	clickable: false,
       },
       series: {
         color: '#3c8dbc',
@@ -179,22 +141,89 @@ $(function () {
         },
       },
       yaxis: {
-        show: true
+        show: true,
+	//zoomRange: [30, 240],
+	panRange: false,
+	zoomRange: [1,1],
+	plotPan: false,
+	axisPan: false,
       },
       xaxis: {
         show: true,
-        tickFormatter: x => new Date(x * 1000).toLocaleTimeString(),
-      }
+        //tickFormatter: x => new Date(x * 1000).toLocaleTimeString(), // for old when bad timestamps in second column
+        tickFormatter: x => new Date(x).toLocaleTimeString('en-US', {hourCycle: 'h23'}),
+	zoomRange: [3600000, 86400000],
+	//panRange: true,
+	plotPan: true,
+	axisPan: true,
+	
+      },
+      propagateSupportedGesture: true,
+      zoom: {
+	interactive: true,
+	active: true,
+	enableTouch: true,
+      },
+      pan: {
+      	interactive: true,
+	active: true,
+	enableTouch: true,
+      },
     }
   )
+	$('#realtime-chart').bind('drag', () => console.log("asdf"))
+	function showTooltip(x, y, contents, color) {     
+		$('<div id="tooltip">' + contents + '</div>').css( {
+			position: 'absolute',
+			width: '140px',
+			display: 'none',
+			'font-family': 'sans-serif',
+			'font-size': '12px',
+			top: y + 5,
+			left: $(window).width()-x-140-5 > 0 ? x + 5 : $(window).width()-140-1,
+			'border-width': '2px',
+			'border-style': 'solid',
+			'border-color': color,
+			padding: '4px',
+			'background-color': "#eee",
+			opacity: 0.90
+		}).appendTo("body").fadeIn(0);
+	}
+
+	function addArrow(dir, right, top, offset) {
+		$("<img class='button' src='arrow-" + dir + ".gif' style='z-index: 10; right:" + right + "px;top:" + top + "px'>")
+		.appendTo($('#realtime-chart-container'))
+		.click((e) => {
+			e.preventDefault();
+			interactive_plot.pan(offset);
+		});
+	}
+	addArrow("left", 55, 100, {left: -10});
+	addArrow("right", 25, 100, {left: 10});
+
+  $('#realtime-chart').bind('plothover', (event, pos, item) => {
+	  var previousPoint = null
+	  if (item) {
+		  if (previousPoint != item.dataIndex) {
+			  previousPoint = item.dataIndex
+			  $("#tooltip").remove()
+			  var x = item.datapoint[0]
+			  var y = item.datapoint[1]
+			  var label = "Time: " + new Date(x).toLocaleTimeString('en-US',{hourCycle: 'h23'}) + "<br>CO<sub>2</sub>: " + y + " ppm"
+			  showTooltip(item.pageX, item.pageY, label, item.series.color)
+		  }
+	  }
+	  else {
+		$("#tooltip").remove()
+		previousPoint = null
+	  }
+  })
 
   var updateInterval = 1000 // Fetch data ever x milliseconds
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
     interactive_plot.setData([getData()])
-    interactive_plot.triggerRedrawOverlay()
     interactive_plot.draw()
-    interactive_plot.triggerRedrawOverlay()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
     }
