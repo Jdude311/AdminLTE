@@ -156,7 +156,7 @@ $(function () {
     })
     var csv = CSVToArray(data, ",")
     csv = csv.map(x => [x[1], x[2]])
-    return csv.slice(Math.max(csv.length-120, 0), csv.length)
+    return csv.slice(Math.max(csv.length-2880, 0), csv.length)
   }
 
   var interactive_plot =  $.plot('#realtime-chart', [
