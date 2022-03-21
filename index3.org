@@ -1387,7 +1387,9 @@ Blank and I'm frankly not sure what the purpose of this is.
 <!-- FLOT HOVER PLUGIN -->
 <script src="plugins/flot/plugins/jquery.flot.hover.js"></script>
 <!-- FLOT NAVIGATION PLUGIN -->
-<script src="plugins/flot/plugins/jquery.flot.navigate.js"></script>
+<!--<script src="plugins/flot/plugins/jquery.flot.navigate.js"></script>-->
+<!-- FLOT TIME -->
+<script src="plugins/flot/plugins/jquery.flot.time.js"></script>
 
 <!-- jQuery Mousewheel -->
 <script src="plugins/jquery-mousewheel/jquery.mousewheel.js"></script>

@@ -107,30 +107,30 @@ $(function () {
   var totalPoints = 100
 
   function getData() {
-    var data
+    var temp
     $.ajax({
       async: false,
       url: '/test_sensors.csv',
       type:'GET',
       success:function(result){
-        data = result
+        temp = result
       }
     })
-    var csv = CSVToArray(data, ",")
+    var csv = CSVToArray(temp, ",")
     csv = csv.map(x => [x[3], x[2]])
     //csv = csv.map(x => [x[1], x[2]]) // old one usign wrong unix timestamps
-    return csv.slice(Math.max(csv.length-2880, 0), csv.length)
+    data = csv.slice(Math.max(csv.length-20160, 0), csv.length) // 20160 is 7 days
+    return data
   }
 
   var interactive_plot =  $.plot('#realtime-chart', [ getData() ],
     {
-      timeline: true,
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
         tickColor: '#f3f3f3',
-	hoverable: false,
-	clickable: false,
+	hoverable: true,
+	clickable: true,
       },
       series: {
         color: '#3c8dbc',
@@ -142,21 +142,31 @@ $(function () {
       },
       yaxis: {
         show: true,
-	//zoomRange: [30, 240],
-	panRange: false,
+	panRange: [10000,2000],
 	zoomRange: [1,1],
-	plotPan: false,
-	axisPan: false,
+	plotPan: true,
+	axisPan: true,
+	min: 300.0,
+	max: 2000.0,
+	autoScale: "none",
       },
       xaxis: {
         show: true,
         //tickFormatter: x => new Date(x * 1000).toLocaleTimeString(), // for old when bad timestamps in second column
-        tickFormatter: x => new Date(x).toLocaleTimeString('en-US', {hourCycle: 'h23'}),
-	zoomRange: [3600000, 86400000],
-	//panRange: true,
+        //tickFormatter: x => new Date(x).toLocaleTimeString('en-US', {hourCycle: 'h23'}),
+	//zoomRange: [3600000, 86400000],
+	zoomRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
 	plotPan: true,
 	axisPan: true,
-	
+	//panRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
+	//panRange: [null, Date.now()],
+	min: parseInt(data[data.length-122][0]),
+	max: parseInt(data[data.length-2][0]),
+	autoScale: "none",
+	mode: "time",
+	timeBase: "milliseconds",
+	timeformat: "%b %d, %H:%M",
+	minTickSize: [30, "second"],
       },
       propagateSupportedGesture: true,
       zoom: {
@@ -171,7 +181,6 @@ $(function () {
       },
     }
   )
-	$('#realtime-chart').bind('drag', () => console.log("asdf"))
 	function showTooltip(x, y, contents, color) {     
 		$('<div id="tooltip">' + contents + '</div>').css( {
 			position: 'absolute',
@@ -189,17 +198,6 @@ $(function () {
 			opacity: 0.90
 		}).appendTo("body").fadeIn(0);
 	}
-
-	function addArrow(dir, right, top, offset) {
-		$("<img class='button' src='arrow-" + dir + ".gif' style='z-index: 10; right:" + right + "px;top:" + top + "px'>")
-		.appendTo($('#realtime-chart-container'))
-		.click((e) => {
-			e.preventDefault();
-			interactive_plot.pan(offset);
-		});
-	}
-	addArrow("left", 55, 100, {left: -10});
-	addArrow("right", 25, 100, {left: 10});
 
   $('#realtime-chart').bind('plothover', (event, pos, item) => {
 	  var previousPoint = null
@@ -219,10 +217,11 @@ $(function () {
 	  }
   })
 
-  var updateInterval = 1000 // Fetch data ever x milliseconds
+  var updateInterval = 3000 // Fetch data ever x milliseconds
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
     interactive_plot.setData([getData()])
+    //interactive_plot.getOptions().xaxis.panRange = [parseInt(data[1][0]), parseInt(data[data.length-2][0])]
     interactive_plot.draw()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
