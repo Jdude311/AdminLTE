@@ -166,6 +166,7 @@ $(function () {
 	mode: "time",
 	timeBase: "milliseconds",
 	timeformat: "%b %d, %H:%M",
+	timezone: "browser",
 	minTickSize: [30, "second"],
       },
       propagateSupportedGesture: true,
