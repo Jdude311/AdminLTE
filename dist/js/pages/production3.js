@@ -104,6 +104,7 @@ $(function () {
   // We use an inline data source in the example, usually data would
   // be fetched from a server
   var data = []
+  var ticks = []
   var totalPoints = 100
 
   function getData() {
@@ -117,14 +118,21 @@ $(function () {
       }
     })
     var csv = CSVToArray(temp, ",")
-    csv = csv.map(x => [x[3], x[2]])
+    csv = csv.map((x) => [x[2], x[3]])
     //csv = csv.map(x => [x[1], x[2]]) // old one usign wrong unix timestamps
-    data = csv.slice(Math.max(csv.length-20160, 0), csv.length) // 20160 is 7 days
+    var tempdata = csv.slice(Math.max(csv.length-1440, 0), csv.length) // 1440 is 12 hours
+    for (let i = 0; i < tempdata.length-1; i++) {
+	    ticks.push([i, new Date(parseInt(tempdata[i][1])).toLocaleString('en-US')])
+	    tempdata[i].unshift(i)
+	    tempdata[i].pop()
+    }
+    data = tempdata;
     return data
   }
 
-  var interactive_plot =  $.plot('#realtime-chart', [ getData() ],
-    {
+  getData()
+
+  var options = {
       grid: {
         borderColor: '#f3f3f3',
         borderWidth: 1,
@@ -142,11 +150,14 @@ $(function () {
       },
       yaxis: {
         show: true,
-	panRange: [10000,2000],
-	zoomRange: [1,1],
+	panRange: [9000,2000],
+	zoomRange: [500, 10000],
+        //plotZoom: false,
+	plotZoom: false,
+	axisZoom: true,
 	plotPan: true,
 	axisPan: true,
-	min: 300.0,
+	min: 300,
 	max: 2000.0,
 	autoScale: "none",
       },
@@ -154,20 +165,29 @@ $(function () {
         show: true,
         //tickFormatter: x => new Date(x * 1000).toLocaleTimeString(), // for old when bad timestamps in second column
         //tickFormatter: x => new Date(x).toLocaleTimeString('en-US', {hourCycle: 'h23'}),
+	//tickFormatter: new Date(parseInt(x[2])).toLocaleTimeString('en-US', {hourcycle: 'h23'}),
+	//ticks: data.slice(1, data.length-1).map((x, i) => [x[0], new Date(parseInt(x[2])).toLocaleTimeString('en-US', {hourCycle: 'h23'})]),
+	ticks: ticks,
 	//zoomRange: [3600000, 86400000],
-	zoomRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
+        zoomRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
+        panRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
+	//zoomRange: [0, 1440],
 	plotPan: true,
 	axisPan: true,
 	//panRange: [parseInt(data[0][0]), parseInt(data[data.length-2][0])],
 	//panRange: [null, Date.now()],
-	min: parseInt(data[data.length-122][0]),
-	max: parseInt(data[data.length-2][0]),
+	//min: parseInt(data[data.length-122][0]),
+	//max: parseInt(data[data.length-2][0]),
+        min: parseInt(data[1][0]),
+        max: parseInt(data[data.length-2][0]),
 	autoScale: "none",
+	/*
 	mode: "time",
 	timeBase: "milliseconds",
 	timeformat: "%b %d, %H:%M",
 	timezone: "browser",
-	minTickSize: [30, "second"],
+	*/
+	minTickSize: 2,
       },
       propagateSupportedGesture: true,
       zoom: {
@@ -181,7 +201,9 @@ $(function () {
 	enableTouch: true,
       },
     }
-  )
+
+  var interactive_plot =  $.plot('#realtime-chart', [data], options)
+
 	function showTooltip(x, y, contents, color) {     
 		$('<div id="tooltip">' + contents + '</div>').css( {
 			position: 'absolute',
@@ -208,7 +230,7 @@ $(function () {
 			  $("#tooltip").remove()
 			  var x = item.datapoint[0]
 			  var y = item.datapoint[1]
-			  var label = "Time: " + new Date(x).toLocaleTimeString('en-US',{hourCycle: 'h23'}) + "<br>CO<sub>2</sub>: " + y + " ppm"
+			  var label = "Time: " + new Date(parseInt(ticks[x][1])).toLocaleTimeString('en-US',{hourCycle: 'h23'}) + "<br>CO<sub>2</sub>: " + y + " ppm"
 			  showTooltip(item.pageX, item.pageY, label, item.series.color)
 		  }
 	  }
@@ -221,8 +243,11 @@ $(function () {
   var updateInterval = 3000 // Fetch data ever x milliseconds
   var realtime = 'on' // If == to on then fetch data every x seconds. else stop fetching
   function update() {
-    interactive_plot.setData([getData()])
-    //interactive_plot.getOptions().xaxis.panRange = [parseInt(data[1][0]), parseInt(data[data.length-2][0])]
+    getData()
+    options.xaxis.panRange = [parseInt(data[0][0]), parseInt(data[data.length-2][0])]
+    options.xaxis.min = parseInt(data[1][0])
+    options.xaxis.max = parseInt(data[data.length-2][0])
+    interactive_plot.setData([data])
     interactive_plot.draw()
     if (realtime === 'on') {
       setTimeout(update, updateInterval)
