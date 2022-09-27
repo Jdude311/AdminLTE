@@ -1,147 +1,83 @@
 /* global Chart:false */
 
-$(function () {
+$(function() {
   'use strict'
 
-  var ticksStyle = {
-    fontColor: '#495057',
-    fontStyle: 'bold'
+  async function getData() {
+    const final = await fetch("/sensors").then(response => {
+      return response.json();
+    }).then(data => {
+      let labels = [];
+      let points = data.map(value => {
+        labels.push(new Date(value.time).getTime());
+        return {
+          x: new Date(value.time).getTime(), y: value.co2
+        }
+      });
+      data = { points: points, labels: labels }
+      console.log("From getData(): ", data);
+      return data;
+    }).catch(() => {
+      console.log("Couldn't get data!");
+    });
+    return final;
   }
-
-  var mode = 'index'
-  var intersect = true
 
   var $salesChart = $('#sales-chart')
   // eslint-disable-next-line no-unused-vars
-  var salesChart = new Chart($salesChart, {
-    type: 'bar',
-    data: {
-      labels: ['JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
-      datasets: [
-        {
-          backgroundColor: '#007bff',
-          borderColor: '#007bff',
-          data: [1000, 2000, 3000, 2500, 2700, 2500, 3000]
-        },
-        {
-          backgroundColor: '#ced4da',
-          borderColor: '#ced4da',
-          data: [700, 1700, 2700, 2000, 1800, 1500, 2000]
-        }
-      ]
-    },
-    options: {
-      maintainAspectRatio: false,
-      tooltips: {
-        mode: mode,
-        intersect: intersect
-      },
-      hover: {
-        mode: mode,
-        intersect: intersect
-      },
-      legend: {
-        display: false
-      },
-      scales: {
-        yAxes: [{
-          // display: false,
-          gridLines: {
-            display: true,
-            lineWidth: '4px',
-            color: 'rgba(0, 0, 0, .2)',
-            zeroLineColor: 'transparent'
-          },
-          ticks: $.extend({
-            beginAtZero: true,
-
-            // Include a dollar sign in the ticks
-            callback: function (value) {
-              if (value >= 1000) {
-                value /= 1000
-                value += 'k'
-              }
-
-              return '$' + value
-            }
-          }, ticksStyle)
-        }],
-        xAxes: [{
-          display: true,
-          gridLines: {
-            display: false
-          },
-          ticks: ticksStyle
-        }]
-      }
-    }
-  })
-
-  var $visitorsChart = $('#visitors-chart')
-  // eslint-disable-next-line no-unused-vars
-  var visitorsChart = new Chart($visitorsChart, {
-    data: {
-      labels: ['18th', '20th', '22nd', '24th', '26th', '28th', '30th'],
-      datasets: [{
-        type: 'line',
-        data: [100, 120, 170, 167, 180, 177, 160],
-        backgroundColor: 'transparent',
-        borderColor: '#007bff',
-        pointBorderColor: '#007bff',
-        pointBackgroundColor: '#007bff',
-        fill: false
-        // pointHoverBackgroundColor: '#007bff',
-        // pointHoverBorderColor    : '#007bff'
-      },
+  var data = {
+    labels: [],
+    datasets: [
       {
-        type: 'line',
-        data: [60, 80, 70, 67, 80, 77, 100],
-        backgroundColor: 'tansparent',
-        borderColor: '#ced4da',
-        pointBorderColor: '#ced4da',
-        pointBackgroundColor: '#ced4da',
-        fill: false
-        // pointHoverBackgroundColor: '#ced4da',
-        // pointHoverBorderColor    : '#ced4da'
-      }]
-    },
+        label: "CO2",
+        // backgroundColor: '#007bff',
+        // borderColor: '#007bff',
+        data: [],
+      }
+    ]
+  };
+  var salesChart = new Chart($salesChart, {
+    type: 'line',
+    data: data,
     options: {
-      maintainAspectRatio: false,
-      tooltips: {
-        mode: mode,
-        intersect: intersect
-      },
-      hover: {
-        mode: mode,
-        intersect: intersect
-      },
-      legend: {
-        display: false
+      plugins: {
+        title: {
+          text: 'Chart.js Time Scale',
+          display: true
+        }
       },
       scales: {
-        yAxes: [{
-          // display: false,
-          gridLines: {
+        x: {
+          type: 'time',
+          time: {
+            // Luxon format string
+            unit: "day",
+            tooltipFormat: 'DD T'
+          },
+          title: {
             display: true,
-            lineWidth: '4px',
-            color: 'rgba(0, 0, 0, .2)',
-            zeroLineColor: 'transparent'
-          },
-          ticks: $.extend({
-            beginAtZero: true,
-            suggestedMax: 200
-          }, ticksStyle)
-        }],
-        xAxes: [{
-          display: true,
-          gridLines: {
-            display: false
-          },
-          ticks: ticksStyle
-        }]
-      }
-    }
+            text: 'Date'
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: 'value'
+          }
+        }
+      },
+    },
   })
+
+  async function updateChart() {
+    data.datasets[0].data = await getData().then((response) => {
+      data.datasets[0].data = response.points;
+      data.labels = response.labels;
+      console.log("From updateChart(): ", data.datasets[0].data, data.datasets[0].labels);
+      salesChart.update();
+    });
+  }
+  updateChart();
 })
 
 // lgtm [js/unused-local-variable]
