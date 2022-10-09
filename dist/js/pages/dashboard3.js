@@ -14,7 +14,7 @@ $(function() {
           x: new Date(value.time).getTime(), y: value.co2
         }
       });
-      data = { points: points, labels: labels }
+      data = { points: points, labels: [Math.min(...labels), Math.max(...labels)] }
       console.log("From getData(): ", data);
       return data;
     }).catch(() => {
@@ -37,37 +37,36 @@ $(function() {
     ]
   };
   var salesChart = new Chart($salesChart, {
-    type: 'line',
-    data: data,
-    options: {
-      plugins: {
-        title: {
-          text: 'Chart.js Time Scale',
-          display: true
-        }
-      },
-      scales: {
-        x: {
-          type: 'time',
-          time: {
-            // Luxon format string
-            unit: "day",
-            tooltipFormat: 'DD T'
-          },
-          title: {
-            display: true,
-            text: 'Date'
-          }
-        },
-        y: {
-          title: {
-            display: true,
-            text: 'value'
-          }
-        }
-      },
+  type: 'line',
+  data: data,
+  options: {
+    plugins: {
+      title: {
+        text: 'Chart.js Time Scale',
+        display: true
+      }
     },
-  })
+    scales: {
+      x: {
+        type: 'time',
+        time: {
+          // Luxon format string
+          tooltipFormat: 'DD T'
+        },
+        title: {
+          display: true,
+          text: 'Date'
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'value'
+        }
+      }
+    },
+  },
+})
 
   async function updateChart() {
     data.datasets[0].data = await getData().then((response) => {
